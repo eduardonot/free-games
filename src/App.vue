@@ -26,6 +26,7 @@
     box-sizing: border-box;
   }
   .btn {
+    text-transform: uppercase;
     border: none;
     border-radius: 2px;
     padding: 5px 10px 5px 10px;

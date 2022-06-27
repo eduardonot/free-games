@@ -1,6 +1,10 @@
 <template>
   <div>
     <WebsiteHeader />
+    <div class="err-message" v-if="getRecentGames.length == 0">
+      <h1>404</h1>
+      <h2 >NO GAME WAS FOUND :(</h2>
+    </div>
     <div class="card-container">
       <div
         v-for="game in getRecentGames"
@@ -42,8 +46,7 @@ export default {
   },
   computed: {
     getRecentGames () {
-      const games = this.$store.getters.getRecentGames
-      return games
+      return  this.$store.getters.getRecentGames
     }
   }
 }
@@ -58,5 +61,12 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
+}
+
+.err-message{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

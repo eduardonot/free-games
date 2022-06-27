@@ -31,6 +31,15 @@ export default new Vuex.Store({
         params: { 'sort-by': 'release-date', category: payload.category || null }
       })
         .then(res => {
+          const titleFilterList = []
+          if (payload.name) {
+            const regexTitle = new RegExp(payload.name.trim().toLowerCase(), 'g')
+            res.data.forEach(game => {
+              regexTitle.test(game.title.toLowerCase()) ? titleFilterList.push(game) : null
+            })
+            commit('setGameList', titleFilterList)
+            return titleFilterList
+          }
           commit('setGameList', res.data)
           return res.data
         })

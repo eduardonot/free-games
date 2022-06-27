@@ -6,17 +6,12 @@
       <h3 class="thin-title">catalog</h3>
     </div>
     <div class="nav-buttons">
-      <dropdown class="my-dropdown-toggle"
-        :options="arrayOfObjects" 
-        :selected="selectCategory" 
-        v-on:updateOption="setCategoryFilter" 
-        :placeholder="'Select an Item'">
-      </dropdown>
+      <SortHandler />
     </div>
   </nav>
 </template>
 <script>
-import Dropdown from 'vue-dropdowns'
+import SortHandler from './SortHandler.vue'
 export default {
   name: 'WebsiteHeader',
   data () {
@@ -41,7 +36,7 @@ export default {
       }
     }
   },
-  components: { Dropdown },
+  components: { SortHandler },
   methods: {
     setCategoryFilter (option) {
       this.$store.dispatch('getRecentGames', { category: option.value })
