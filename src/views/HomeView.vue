@@ -1,13 +1,13 @@
 <template>
   <div>
-    <WebsiteHeader />
-    <div class="err-message" v-if="getRecentGames.length == 0">
+    <WebsiteHeader @clickedToSort="clickedToSort"/>
+    <div class="err-message" v-if="getGameList.length == 0">
       <h1>404</h1>
       <h2 >NO GAME WAS FOUND :(</h2>
     </div>
-    <div class="card-container">
+    <div id="test" class="card-container">
       <div
-        v-for="game in getRecentGames"
+        v-for="game in getGameList"
         :key="game.id"
       >
         <GameCard 
@@ -33,26 +33,44 @@ export default {
   components: { GameCard, WebsiteHeader },
   data() {
     return {
+      listItemsToShow: 15,
       freeGamesList: []
     }
   },
   created () {
+    window.addEventListener("scroll", this.checkElementPosition)
     this.getRecent()
   },
   methods: {
     getRecent () {
       this.$store.dispatch('getRecentGames')
+    },
+    checkElementPosition () {
+      // CHECK IF THE ELEMENT IS IN THE BOTTOM OF THE SCREEN
+        let bottomOfWindow = document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight
+        if (bottomOfWindow) {
+          this.listItemsToShow += 15
+          this.getRecent()
+      }
+    },
+    clickedToSort() {
+      this.listItemsToShow = 15
     }
   },
   computed: {
     getRecentGames () {
       return  this.$store.getters.getRecentGames
+    },
+    getGameList () {
+      const game = this.$store.getters.getRecentGames
+      return game.splice(0, this.listItemsToShow)
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
+
 .card-container {
   box-sizing: border-box;
   width: 100%;

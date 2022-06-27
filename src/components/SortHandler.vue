@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     setCategoryFilter () {
+      this.$emit('clickedToSort')
       this.$store.dispatch('getRecentGames', { category: this.categoryFilter, name: this.nameFilter })
     },
     changeCategory(value) {

@@ -6,7 +6,7 @@
       <h3 class="thin-title">catalog</h3>
     </div>
     <div class="nav-buttons">
-      <SortHandler />
+      <SortHandler @clickedToSort="clickedToSort"/>
     </div>
   </nav>
 </template>
@@ -40,6 +40,9 @@ export default {
   methods: {
     setCategoryFilter (option) {
       this.$store.dispatch('getRecentGames', { category: option.value })
+    },
+    clickedToSort() {
+      this.$emit('clickedToSort')
     }
   }
 }
